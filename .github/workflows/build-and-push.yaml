@@ -1,4 +1,4 @@
-name: Build and Push on Master Push
+name: Build and Push Docker Image
 
 # Triggers the workflow on push events to the master branch
 on:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest  # Specifies the runner environment
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -20,20 +20,23 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
-    - name: Log in to Google Cloud Artifact Registry (placeholder)
-      uses: google-github-actions/setup-gcloud@v0
-      with:
-        version: 'latest'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        export_default_credentials: true
+    # Uncomment the next steps to log in to Google Cloud Artifact Registry
+    # Uncomment the next steps to log in to AWS Elastic Container Registry
+
+    # - name: Log in to Google Cloud Artifact Registry (placeholder)
+    #   uses: google-github-actions/setup-gcloud@v0
+    #   with:
+    #     version: 'latest'
+    #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+    #     service_account_key: ${{ secrets.GCP_SA_KEY }}
+    #     export_default_credentials: true
       # Uncomment and configure the next step when deciding to use Google Cloud Artifact Registry
       # - name: Configure Docker for Google Cloud Artifact Registry
       #   run: gcloud auth configure-docker <REGION>-docker.pkg.dev
 
     - name: Build and tag the Docker image
       run: |
-        docker build . -t <REGION>-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/your-repo/your-image:latest
+        docker build . -t us-docker.pkg.dev/test/test:latest
 
     # Uncomment the next step to push the image to Google Cloud Artifact Registry
     # - name: Push the Docker image

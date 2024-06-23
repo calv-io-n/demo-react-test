@@ -1,71 +1,67 @@
-# Getting Started with Create React App
+# React Tests CI Demo & Pipelines
+
+This project is a demo of how to set up a CI pipeline for a React application using GitHub Actions. The pipeline runs tests on the application and builds a docker image of the application. The docker image is then pushed to either Google Cloud Registry or AWS Elastic Container Registry. (Work in progress).
+
+The project is entirely dockerized and uses docker-compose to run the application locally and a test docker container to run the tests.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Requirements
+- Docker
+- Docker Compose
+- Node.js
+- NPM Create React App
+- Google Cloud SDK (optional)
+- AWS CLI (optional)
 
-In the project directory, you can run:
+## Local Development: Starting and Building the Application
 
-### `npm start`
+To run the application locally, use the following commands:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+docker-compose -f dev.docker-compose.yaml up
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+or
 
-### `npm test`
+This command will build the docker image and run the application in a container.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+docker-compose -f dev.docker-compose.yaml up --build
+```
 
-### `npm run build`
+## Local Development: Stopping the Application
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To stop the application, use the following command:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+docker-compose -f dev.docker-compose.yaml down -v
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The `-v` flag is used to remove the volumes associated with the containers.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Local Development: Accessing the Application
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application will be available at `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Running Tests: Locally
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To run the tests, use the following command:
 
-## Learn More
+```bash
+docker-compose -f test.docker-compose.yml up
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Running Tests: CI Pipeline (GitHub Actions)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Secrets
 
-### Code Splitting
+You need to provide the authentication details for the container to push the docker image to Google Cloud Registry or AWS Elastic Container Registry. The authentication details should be stored in GitHub secrets.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+*Local secrets* can be stored in a `.env` file in the root directory of the project. The `.env` file should not be committed to the repository.
 
-### Analyzing the Bundle Size
+### Environment Variables
+Environment variables can be written directly into the environment section of the docker-compose file.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# demo-react-test
+Some envriorment variables are required to be defined in the GitHub environment secrets.
