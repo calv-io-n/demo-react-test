@@ -4,6 +4,4 @@ services:
     build:
       context: .
       dockerfile: test.dockerfile
-    volumes:
-      - .:/app
     command: npm test
