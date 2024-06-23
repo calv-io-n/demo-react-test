@@ -1,10 +1,9 @@
 name: CI on Pull Request
 
-# This specifies when the actions will run. 
+# Run on opened and synchronize pull requests
 on:
   pull_request:
-    branches:
-      - master  # Ensures the action runs only on PRs targeting the master branch
+    types: [opened, synchronize]
 
 jobs:
   build-and-test:
