@@ -1,0 +1,30 @@
+# .github/workflows/ci-testing.yaml
+name: CI on Pull Request
+
+# Run on opened and synchronize pull requests
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Specifies the runner environment
+
+    services:
+      docker:
+        image: docker:19.03.12-dind
+        options: --privileged
+        ports:
+          - 2375:2375
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+
+    - name: Build and run the Docker containers
+      run: |
+        docker-compose -f test.docker-compose.yaml up --build --abort-on-container-exit
+
+    - name: Shutdown Docker Compose
+      run: |
+        docker-compose -f test.docker-compose.yaml down
