@@ -1,0 +1,9 @@
+# ./test.docker-compose.yaml
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: test.dockerfile  # This specifies the Dockerfile for testing
+    volumes:
+      - .:/app
+    command: npm test

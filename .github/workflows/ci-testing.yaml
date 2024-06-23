@@ -1,0 +1,30 @@
+name: CI on Pull Request
+
+# This specifies when the actions will run. 
+on:
+  pull_request:
+    branches:
+      - master  # Ensures the action runs only on PRs targeting the master branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Specifies the runner environment
+
+    services:
+      docker:
+        image: docker:19.03.12-dind
+        options: --privileged
+        ports:
+          - 2375:2375
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+
+    - name: Build and run the Docker containers
+      run: |
+        docker-compose -f test.docker-compose.yaml up --build --abort-on-container-exit
+
+    - name: Shutdown Docker Compose
+      run: |
+        docker-compose -f test.docker-compose.yaml down
