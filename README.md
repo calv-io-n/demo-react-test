@@ -14,6 +14,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Google Cloud SDK (optional)
 - AWS CLI (optional)
 
+## Important Files
+- `dev.docker-compose.yaml`: Docker Compose file for running the application locally. Env vars can be defined in this file.
+- `test.docker-compose.yaml`: Docker Compose file for running the tests locally or in the CI pipeline. Env vars can be defined in this file.
+- `.github/workflows/build-and-push.yaml`: GitHub Actions workflow file for pushing the docker image to Google Cloud Registry or AWS Elastic Container Registry.
+- `.github/workflows/ci-testing.yaml`: GitHub Actions workflow file for running the tests.
+- `dev.dockerfile`: Dockerfile for building the application image.
+- `test.dockerfile`: Dockerfile for running the tests.
+- `prod.dockerfile`: Dockerfile for building the production image.
+- `prod.docker-compose.yaml`: **DEBUG ONLY** Docker Compose file for running the production image. Env vars can be defined in this file.
+- `.env`: Secret file for storing secret environment variables. **DO NOT COMMIT TO REPOSITORY**.
+- `.env.example`: Example file for storing secret environment variables.
+
+
 ## Local Development: Starting and Building the Application
 
 To run the application locally, use the following commands:

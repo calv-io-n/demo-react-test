@@ -36,7 +36,7 @@ jobs:
 
     - name: Build and tag the Docker image
       run: |
-        docker build . -t us-docker.pkg.dev/test/test:latest
+        docker -f prod.dockerfile build . -t us-docker.pkg.dev/test/test:latest
 
     # Uncomment the next step to push the image to Google Cloud Artifact Registry
     # - name: Push the Docker image
