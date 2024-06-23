@@ -1,0 +1,14 @@
+# THIS FILE IS FOR DEBUG ONLY
+services:
+  prod-debug-app:
+    build:
+      context: .
+      dockerfile: prod.dockerfile
+    ports:
+      - "8089:80"
+    networks:
+      - prod-debug-network
+
+networks:
+  prod-debug-network:
+    driver: bridge
