@@ -1,7 +1,6 @@
 # .github/workflows/ci-testing.yaml
 name: CI on Pull Request
 
-# Run on opened and synchronize pull requests
 on:
   pull_request:
     types: [opened, synchronize]
